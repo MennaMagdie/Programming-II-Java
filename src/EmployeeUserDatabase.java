@@ -1,33 +1,18 @@
 import java.util.ArrayList;
-import java.io.File;  // Import the File class
-import java.io.FileNotFoundException;  // Import this class to handle errors
-import java.util.Scanner; // Import the Scanner class to read text files
-import java.io.FileWriter;   // Import the FileWriter class
-import java.io.IOException;  // Import the IOException class to handle errors
+import java.io.FileWriter;
+import java.io.IOException;
 
-public class EmployeeUserDatabase{ //used to access employees database
 
-//    private ArrayList <EmployeeUser> records;
-    private ArrayList<EmployeeUser> records = new ArrayList<>(); //meen feehom sa7?
-    //q: recordsss byedeeny warning maybe final BUT records2 mesh bye3mel haga???
+public class EmployeeUserDatabase extends Database{
 
-    //q: records. not working here? since i'm not inside a fn?
 
-    private String filename;
+    private ArrayList<EmployeeUser> records = new ArrayList<>();
 
 
     public EmployeeUserDatabase(String filename) {
-        this.setFilename(filename);
-    }
 
-
-    public void setFilename(String filename) {
-        this.filename = filename;
-
-    }
-
-    public String getFilename() {
-        return filename;
+        this.setFilename("Employee.txt");
+//        this.records = new ArrayList<EmployeeUser>();
     }
 
     public void setRecords(ArrayList<EmployeeUser> records) {
@@ -38,35 +23,17 @@ public class EmployeeUserDatabase{ //used to access employees database
         return records;
     }
 
-    public void readFromFile() {
-        try {
-            File database = new File(this.filename);
-            Scanner fileReader = new Scanner(database);
-            while (fileReader.hasNextLine()) {
-                String line = fileReader.nextLine();
-                EmployeeUser e = createRecordFrom(line);
-                this.insertRecord(e);
-            }
-            fileReader.close(); //q: 3ady yeshouf filereader w howa out of scope try?
-        }
-        catch(FileNotFoundException e) {
-            System.out.println("An error occurred...");
-            e.printStackTrace(); //not sure bete3mel eh lessa
-        }
-
-
-    }
-
+    @Override
     public EmployeeUser createRecordFrom(String line) {
 
         String[] splitData = line.split(",");
 
-         return (new EmployeeUser(splitData[0],splitData[1],
+        return (new EmployeeUser(splitData[0],splitData[1],
                 splitData[2],splitData[3],splitData[4]));
 
     }
 
-    public ArrayList<EmployeeUser> returnAllRecords() {  //q: not sure da elrequired or not
+    public ArrayList<EmployeeUser> returnAllRecords() {
         return this.getRecords();
     }
 
@@ -92,34 +59,31 @@ public class EmployeeUserDatabase{ //used to access employees database
         return null;
     }
 
-    public void insertRecord(EmployeeUser record) {
-        this.records.add(record);
-    }
 
     public void deleteRecord(String key) {
 
+
         if(this.contains(key)) {
-            // needs refactoring ig
+
             for(int i=0 ; i<this.records.size() ; i++) {
                 if(this.records.get(i).getEmployeeID().equals(key))
-                    records.remove(i); //Warning: Suspicious 'List.remove()' in loop
+                {
+                    this.records.remove(i); //Warning: Suspicious 'List.remove()' in loop
+                }
+
             }
         }
     }
 
     public void saveToFile() {
         try {
-            FileWriter database = new FileWriter(this.filename,false);
+            FileWriter database = new FileWriter(getFilename(),false);
 
             for (EmployeeUser record : this.records) {
                 database.write(record.getEmployeeID() + "," + record.getName()
                         + "," + record.getEmail() + "," + record.getAddress() + "," + record.getPhoneNumber() + "\n");
+//                setNumberOfRecords(getNumberOfRecords() +  1);
             }
-//            for(int i=0 ; i<this.records.size() ; i++) {
-//                database.write(records.get(i).getEmployeeID()+","+records.get(i).getName()
-//                        +","+records.get(i).getEmail()+","+records.get(i).getAddress()+","+records.get(i).getPhoneNumber()+"\n");
-//            }
-
             database.close();
         }
 
@@ -129,6 +93,27 @@ public class EmployeeUserDatabase{ //used to access employees database
         }
     }
 
+    public void insertRecord(Record record){
+
+//                    boolean isAdded = false;
+//
+//            for(int i=0 ; i<records.size()+1 ; i++ ) {
+//                if(database.returnAllRecords().get(i).getEmployeeID().equals(((EmployeeUser)record))) {
+//                    System.out.println("mawgouuuuda already");
+//                    isAdded = true;
+//                    break;
+//                }
+//                else {
+//                    System.out.println("mashoftesh elID da abl keda");
+//                }
+//            }
+
+
+
+        this.records.add((EmployeeUser) record);
+        setNumberOfRecords(getNumberOfRecords() +  1);
+//        this.setNumberOfRecords(this.getNumberOfRecords() + 1);
+    }
 
 
 }

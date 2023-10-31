@@ -1,2 +1,0 @@
-E1200,Ahmed,ahmed_1999@gmail.com,Alexandria,01088877345
-E8082,Menna,mennamagdyx@gmail.com,Paris,01069122095

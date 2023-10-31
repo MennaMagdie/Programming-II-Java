@@ -8,11 +8,11 @@ public class EmployeeUser implements Record{
 
     EmployeeUser(String employeeID, String name, String email, String address, String phoneNumber) {
 
-        this.employeeID = employeeID;
-        this.name = name;
-        this.email = email;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
+        setEmployeeID(employeeID);
+        setName(name);
+        setEmail(email);
+        setAddress(address);
+        setPhoneNumber(phoneNumber);
 
     }
 
