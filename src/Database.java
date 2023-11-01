@@ -1,11 +1,10 @@
 import java.io.File;  // Import the File class
 import java.io.FileNotFoundException;  // Import this class to handle errors
-import java.util.ArrayList;
 import java.util.Scanner; // Import the Scanner class to read text files
 
 
 public abstract class Database {
-//    protected ArrayList<Record> records;
+    //    protected ArrayList<Record> records;
     private String filename = "";
     private int numberOfRecords = 0;
 
@@ -15,7 +14,7 @@ public abstract class Database {
 
     public void setNumberOfRecords(int numberOfRecords) {
         this.numberOfRecords = numberOfRecords;
-}
+    }
 
     public String getFilename() {
         return this.filename;
@@ -41,7 +40,7 @@ public abstract class Database {
             e.printStackTrace();
         }
 
-    };
+    }
 
     public abstract Record createRecordFrom(String line);
 
@@ -53,7 +52,5 @@ public abstract class Database {
     public abstract void deleteRecord(String key);
     public abstract void saveToFile();
 
-
-
-
 }
+

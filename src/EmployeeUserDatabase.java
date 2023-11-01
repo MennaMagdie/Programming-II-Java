@@ -1,17 +1,13 @@
 import java.util.ArrayList;
 import java.io.FileWriter;
 import java.io.IOException;
-
-
 public class EmployeeUserDatabase extends Database{
-
 
     private ArrayList<EmployeeUser> records = new ArrayList<>();
 
-
     public EmployeeUserDatabase(String filename) {
 
-        this.setFilename("Employee.txt");
+        this.setFilename(filename);
 //        this.records = new ArrayList<EmployeeUser>();
     }
 
@@ -37,6 +33,7 @@ public class EmployeeUserDatabase extends Database{
         return this.getRecords();
     }
 
+    @Override
     public boolean contains(String key) {
 
         for (EmployeeUser record : this.records) {
@@ -48,6 +45,7 @@ public class EmployeeUserDatabase extends Database{
         return false;
     }
 
+    @Override
     public EmployeeUser getRecord(String key) {
 
         for (EmployeeUser record : this.records) {
@@ -60,6 +58,7 @@ public class EmployeeUserDatabase extends Database{
     }
 
 
+    @Override
     public void deleteRecord(String key) {
 
 
@@ -75,6 +74,7 @@ public class EmployeeUserDatabase extends Database{
         }
     }
 
+    @Override
     public void saveToFile() {
         try {
             FileWriter database = new FileWriter(getFilename(),false);
@@ -82,7 +82,6 @@ public class EmployeeUserDatabase extends Database{
             for (EmployeeUser record : this.records) {
                 database.write(record.getEmployeeID() + "," + record.getName()
                         + "," + record.getEmail() + "," + record.getAddress() + "," + record.getPhoneNumber() + "\n");
-//                setNumberOfRecords(getNumberOfRecords() +  1);
             }
             database.close();
         }
@@ -93,22 +92,8 @@ public class EmployeeUserDatabase extends Database{
         }
     }
 
+    @Override
     public void insertRecord(Record record){
-
-//                    boolean isAdded = false;
-//
-//            for(int i=0 ; i<records.size()+1 ; i++ ) {
-//                if(database.returnAllRecords().get(i).getEmployeeID().equals(((EmployeeUser)record))) {
-//                    System.out.println("mawgouuuuda already");
-//                    isAdded = true;
-//                    break;
-//                }
-//                else {
-//                    System.out.println("mashoftesh elID da abl keda");
-//                }
-//            }
-
-
 
         this.records.add((EmployeeUser) record);
         setNumberOfRecords(getNumberOfRecords() +  1);
@@ -117,3 +102,4 @@ public class EmployeeUserDatabase extends Database{
 
 
 }
+
