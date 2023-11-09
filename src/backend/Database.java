@@ -1,10 +1,12 @@
+package backend;
+
 import java.io.File;  // Import the File class
 import java.io.FileNotFoundException;  // Import this class to handle errors
 import java.util.Scanner; // Import the Scanner class to read text files
 
 
 public abstract class Database {
-    //    protected ArrayList<Record> records;
+    //    protected ArrayList<backend.Record> records;
     private String filename = "";
     private int numberOfRecords = 0;
 

@@ -1,8 +1,13 @@
+package backend;
+
+import backend.CustomerProduct;
+import backend.Database;
+
 import java.util.*;
 import java.io.*;
 import java.time.LocalDate;
 
-public class CustomerProductDatabase extends Database {
+ class CustomerProductDatabase extends Database {
 
     private ArrayList<CustomerProduct> records = new ArrayList<>();
 

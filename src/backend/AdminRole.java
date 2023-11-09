@@ -1,11 +1,16 @@
+package backend;
+
+import constants.FileNames;
+
+import java.io.File;
 import java.util.ArrayList;
 
-public class AdminRole {
+public class AdminRole implements FileNames {
 
     private EmployeeUserDatabase database;
 
     public AdminRole() {
-        database = new EmployeeUserDatabase("D:\\Uni\\Term-5\\Programming-2\\inventory_elsobh\\Employee.txt");
+        database = new EmployeeUserDatabase(EMPLOYEE_FILENAME);
         database.readFromFile();
     }
 

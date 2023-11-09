@@ -1,3 +1,5 @@
+package backend;
+
 public class Product implements Record {
     private String productID;
     private String productName;

@@ -1,3 +1,5 @@
+package backend;
+
 import java.time.LocalDate;
 
 public class Main {
@@ -32,7 +34,6 @@ public class Main {
         admin.addEmployee("EMP-005", "Nour", "nour@email.com", "202 Drive, Aswan", "+20165432178");
 
 
-        admin.removeEmployee("EMP-001");
         admin.logout();
 
 
@@ -60,11 +61,14 @@ public class Main {
         employee.addProduct("GMC-003", "PlayStation 5", "Sony", "GameStop", 4, 500);
         employee.addProduct("SPK-004", "Google Nest Audio", "Google", "Walmart", 1, 200);
         employee.addProduct("WTCH-005", "Fitbit Versa 3", "Fitbit", "Target", 2, 150);
+
+
         Product[] newProducts = employee.getListOfProducts();
         if (newProducts.length - oldProducts.length != 5) {
             System.out.println("There is a problem in adding new products to the products file or arraylist");
             return;
         }
+
 
         CustomerProduct[] oldOperations = employee.getListOfPurchasingOperations();
 

@@ -1,16 +1,22 @@
+package backend;
+
+import backend.CustomerProduct;
+import backend.CustomerProductDatabase;
+import backend.Product;
+import backend.ProductDatabase;
+import constants.FileNames;
 
 import java.util.ArrayList;
 import java.time.LocalDate;
-import java.util.Objects;
 
-public class EmployeeRole {
+public class EmployeeRole implements FileNames {
 
     private ProductDatabase productDatabase;
     private CustomerProductDatabase customerProductDatabase;
 
     public EmployeeRole() {
-        productDatabase = new ProductDatabase("D:\\Uni\\Term-5\\Programming-2\\inventory_elsobh\\Products.txt");
-        customerProductDatabase = new CustomerProductDatabase("D:\\Uni\\Term-5\\Programming-2\\inventory_elsobh\\CustomerProducts.txt");
+        productDatabase = new ProductDatabase(PRODUCT_FILENAME);
+        customerProductDatabase = new CustomerProductDatabase(CUSTOMER_PRODUCT_FILENAME);
 //        productDatabase.readFromFile();
 //        customerProductDatabase.readFromFile();
     }

@@ -1,7 +1,11 @@
+package backend;
+
+import backend.Database;
+
 import java.util.*;
 import java.io.*;
 
-public class ProductDatabase extends Database{
+class ProductDatabase extends Database {
 
     private ArrayList<Product> records = new ArrayList<>();
 //    private String filename;

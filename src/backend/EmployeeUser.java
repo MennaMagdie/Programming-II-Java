@@ -1,4 +1,6 @@
-public class EmployeeUser implements Record{
+package backend;
+
+public class EmployeeUser implements Record {
 
     private String employeeID;
     private String name;

@@ -1,14 +1,18 @@
+package backend;
+
+import backend.Database;
+
 import java.util.ArrayList;
 import java.io.FileWriter;
 import java.io.IOException;
-public class EmployeeUserDatabase extends Database{
+class EmployeeUserDatabase extends Database {
 
     private ArrayList<EmployeeUser> records = new ArrayList<>();
 
     public EmployeeUserDatabase(String filename) {
 
         this.setFilename(filename);
-//        this.records = new ArrayList<EmployeeUser>();
+//        this.records = new ArrayList<backend.EmployeeUser>();
     }
 
     public void setRecords(ArrayList<EmployeeUser> records) {
