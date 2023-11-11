@@ -1,6 +1,7 @@
 package backend;
 
 import constants.FileNames;
+import frontend.Node;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class AdminRole implements FileNames {
 
         EmployeeUser e1 = new EmployeeUser(employeeID, name, email, address, phoneNumber);
         database.insertRecord(database.createRecordFrom(e1.lineRepresentation()));
-        logout();
+//        logout();
     }
 
     public EmployeeUser[] getListOfEmployees() {
@@ -28,7 +29,11 @@ public class AdminRole implements FileNames {
 
     public void removeEmployee(String key) {
         database.deleteRecord(key);
-        logout();
+//        logout();
+    }
+
+    public boolean employeeExists(String key) {
+        return database.contains(key);
     }
 
     public void logout() {

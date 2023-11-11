@@ -3,16 +3,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package frontend;
+import backend.AdminRole;
+
+import javax.swing.*;
 
 /**,,
  *
  * @author Menna Magdy
  */
-public class AddEmployeeWindow extends javax.swing.JFrame {
+public class AddEmployeeWindow extends javax.swing.JFrame implements Node, Admin{
 
     /**
      * Creates new form AddEmployeeWindow
      */
+    private Node parent;
+    private AdminRole admin;
     public AddEmployeeWindow() {
         initComponents();
         this.setTitle("Add Employee");
@@ -39,7 +44,12 @@ public class AddEmployeeWindow extends javax.swing.JFrame {
         jTextField5 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jButton1.setBackground(new java.awt.Color(51, 51, 51));
         jButton1.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
@@ -159,10 +169,50 @@ public class AddEmployeeWindow extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+
+        try {
+
+            String id = jTextField1.getText();
+            String name = jTextField2.getText();
+            String email = jTextField3.getText();
+            String address = jTextField4.getText();
+            String phone_number = jTextField5.getText();
+            if (id == null || name == null || email == null || address == null || phone_number == null
+            || id == "" || name == "" || email == "" || address == "" || phone_number == "") {
+                JOptionPane.showMessageDialog(null, "Some fields are empty.");
+
+            } else {
+                if (getAdmin().employeeExists(id)) {
+                    JOptionPane.showMessageDialog(null, "Employee "
+                            + id + " already exists!");
+                } else {
+                    getAdmin().addEmployee(id, name, email, address, phone_number);
+                    JOptionPane.showMessageDialog(null, "Employee "
+                            + id + " added successfully.");
+                    jTextField1.setText("");
+                    jTextField2.setText("");
+                    jTextField3.setText("");
+                    jTextField4.setText("");
+                    jTextField5.setText("");
+                }
+            }
+        }
+        catch (NullPointerException e1) {
+            JOptionPane.showMessageDialog(null, "Some fields are empty.");
+        }
+        catch (ArrayIndexOutOfBoundsException e2) {
+            JOptionPane.showMessageDialog(null, "Some fields are empty.");
+        }
     }
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+    }
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {
+        // TODO add your handling code here:
+        this.setVisible(false);
+        ((JFrame)getParentNode()).setVisible(true);
     }
 
     /**
@@ -212,5 +262,25 @@ public class AddEmployeeWindow extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
+
+    @Override
+    public void setParentNode(Node node) {
+        this.parent = node;
+    }
+
+    @Override
+    public Node getParentNode() {
+        return this.parent;
+    }
+
+    @Override
+    public void setAdmin(AdminRole admin) {
+        this.admin = admin;
+    }
+
+    @Override
+    public AdminRole getAdmin() {
+        return this.admin;
+    }
     // End of variables declaration
 }

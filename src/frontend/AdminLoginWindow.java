@@ -12,18 +12,20 @@ import javax.swing.*;
  *
  * @author Menna Magdy
  */
-public class AdminLoginWindow extends javax.swing.JFrame implements LoginCredentials{
+public class AdminLoginWindow extends javax.swing.JFrame implements LoginCredentials, Node{
 
     /**
      * Creates new form AdminLoginWindow
      */
     private AdminRoleWindow adminRoleW = null;
     private String username, password;
+    private Node parent;
 
     public AdminLoginWindow() {
         initComponents();
         this.setTitle("Admin Login");
         adminRoleW = new AdminRoleWindow();
+        adminRoleW.setParentNode(this);
         this.username = ADMIN_USERNAME;
         this.password = ADMIN_PASSWORD;
     }
@@ -38,12 +40,17 @@ public class AdminLoginWindow extends javax.swing.JFrame implements LoginCredent
     private void initComponents() {
 
         usernameField = new javax.swing.JTextField();
-        passwordField = new javax.swing.JTextField();
+        passwordField = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         loginButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         usernameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -117,6 +124,12 @@ public class AdminLoginWindow extends javax.swing.JFrame implements LoginCredent
         pack();
     }// </editor-fold>
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {
+        // TODO add your handling code here:
+        this.setVisible(false);
+        ((JFrame)getParentNode()).setVisible(true);
+    }
+
     private void usernameFieldActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
 
@@ -130,6 +143,8 @@ public class AdminLoginWindow extends javax.swing.JFrame implements LoginCredent
         // TODO add your handling code here:
         String username = usernameField.getText();
         String password = passwordField.getText();
+        usernameField.setText("");
+        passwordField.setText("");
 
         if(this.username.equals(username) && this.password.equals(password)) {
             this.setVisible(false);
@@ -179,7 +194,18 @@ public class AdminLoginWindow extends javax.swing.JFrame implements LoginCredent
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JButton loginButton;
-    private javax.swing.JTextField passwordField;
+    private javax.swing.JPasswordField passwordField;
     private javax.swing.JTextField usernameField;
+
+    @Override
+    public void setParentNode(Node node) {
+        this.parent = node;
+    }
+
+    @Override
+    public Node getParentNode() {
+        return this.parent;
+    }
+
     // End of variables declaration
 }

@@ -4,15 +4,23 @@
  */
 package frontend;
 
+import backend.AdminRole;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.WindowEvent;
+
 /**
  *
  * @author Menna Magdy
  */
-public class AdminRoleWindow extends javax.swing.JFrame {
+public class AdminRoleWindow extends javax.swing.JFrame implements Node, Admin{
 
     private ViewEmployeesWindow viewEmployeesW = new ViewEmployeesWindow();
     private AddEmployeeWindow addEmployeeW = new AddEmployeeWindow();
     private RemoveEmployeeWindow removeEmployeeW = new RemoveEmployeeWindow();
+    private Node parent;
+    private AdminRole admin = null; //Q: leh hena matenfa3sh tekoun default?
 
     /**
      * Creates new form AdminRoleWindow
@@ -20,7 +28,17 @@ public class AdminRoleWindow extends javax.swing.JFrame {
     public AdminRoleWindow() {
         initComponents();
         this.setTitle("Admin Role");
+        addEmployeeW.setParentNode(this);
+        removeEmployeeW.setParentNode(this);
+        viewEmployeesW.setParentNode(this);
+        admin = new AdminRole();
+
+
+
+        removeEmployeeW.setAdmin(this.admin);
+        addEmployeeW.setAdmin(this.admin);
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -36,7 +54,14 @@ public class AdminRoleWindow extends javax.swing.JFrame {
         removeEmployeeButton = new javax.swing.JButton();
         logoutButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+//        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+//        addWindowListener(new java.awt.event.WindowAdapter() {
+//            public void windowClosing(java.awt.event.WindowEvent evt) {
+//                formWindowClosing(evt);
+//            }
+//        });
 
         viewEmployeesButton.setBackground(new java.awt.Color(51, 51, 51));
         viewEmployeesButton.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
@@ -108,6 +133,13 @@ public class AdminRoleWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>
 
+
+//    private void formWindowClosing(java.awt.event.WindowEvent evt) {
+//        // TODO add your handling code here:
+//        this.setVisible(false);
+//
+//    }
+
     private void viewEmployeesButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         this.setVisible(false);
@@ -128,6 +160,12 @@ public class AdminRoleWindow extends javax.swing.JFrame {
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+//        closeWindow_();
+//        System.exit(0);
+        admin.logout();
+//        // TODO add your handling code here:
+        this.setVisible(false);
+        ((JFrame)getParentNode().getParentNode()).setVisible(true);
     }
 
     /**
@@ -170,5 +208,26 @@ public class AdminRoleWindow extends javax.swing.JFrame {
     private javax.swing.JButton logoutButton;
     private javax.swing.JButton removeEmployeeButton;
     private javax.swing.JButton viewEmployeesButton;
+
+    @Override
+    public void setParentNode(Node node) {
+        this.parent = node;
+    }
+
+    @Override
+    public Node getParentNode() {
+        return this.parent;
+    }
     // End of variables declaration
+
+
+    @Override
+    public void setAdmin(AdminRole admin) {
+            this.admin = admin;
+    }
+
+    @Override
+    public AdminRole getAdmin() {
+        return this.admin;
+    }
 }

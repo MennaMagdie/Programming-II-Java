@@ -10,16 +10,18 @@ import javax.swing.JOptionPane;
  *
  * @author Menna Magdy
  */
-public class InventorySystemWindow extends javax.swing.JFrame {
+public class InventorySystemWindow extends javax.swing.JFrame implements Node{
 
     /**
      * Creates new form InventorySystemWindow
      */
     private AdminLoginWindow adminLoginW = null;
+    private Node parent;
     public InventorySystemWindow() {
         initComponents();
         this.setTitle("Inventory System");
         adminLoginW = new AdminLoginWindow();
+        adminLoginW.setParentNode(this);
     }
 
     /**
@@ -130,5 +132,14 @@ public class InventorySystemWindow extends javax.swing.JFrame {
     // Variables declaration - do not modify
     private javax.swing.JButton adminRoleButton;
     private javax.swing.JButton employeeRoleButton;
+
+    @Override
+    public void setParentNode(Node node) {
+    }
+
+    @Override
+    public Node getParentNode() {
+        return null;
+    }
     // End of variables declaration
 }
