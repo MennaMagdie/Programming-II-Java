@@ -14,13 +14,13 @@ import java.awt.event.WindowEvent;
  *
  * @author Menna Magdy
  */
-public class AdminRoleWindow extends javax.swing.JFrame implements Node, Admin{
+public class AdminRoleWindow extends javax.swing.JFrame implements Node{
 
-    private ViewEmployeesWindow viewEmployeesW = new ViewEmployeesWindow();
-    private AddEmployeeWindow addEmployeeW = new AddEmployeeWindow();
-    private RemoveEmployeeWindow removeEmployeeW = new RemoveEmployeeWindow();
+    private ViewEmployeesWindow viewEmployeesW;
+    private AddEmployeeWindow addEmployeeW;
+    private RemoveEmployeeWindow removeEmployeeW;
     private Node parent;
-    private AdminRole admin = null; //Q: leh hena matenfa3sh tekoun default?
+    private AdminRole admin; //Q: leh hena matenfa3sh tekoun default?
 
     /**
      * Creates new form AdminRoleWindow
@@ -28,15 +28,20 @@ public class AdminRoleWindow extends javax.swing.JFrame implements Node, Admin{
     public AdminRoleWindow() {
         initComponents();
         this.setTitle("Admin Role");
-        addEmployeeW.setParentNode(this);
-        removeEmployeeW.setParentNode(this);
-        viewEmployeesW.setParentNode(this);
         admin = new AdminRole();
+        try {
+            String[][] tableData = null;
+            tableData = new String[admin.getListOfEmployees().length][5];
 
+            for (int i = 0; i < admin.getListOfEmployees().length; i++) {
+                tableData[i] = admin.getListOfEmployees()[i].lineRepresentation().split(",");
+            }
 
+        }
+        catch(NullPointerException e) {
+            System.out.println("no admin fel role");
+        }
 
-        removeEmployeeW.setAdmin(this.admin);
-        addEmployeeW.setAdmin(this.admin);
     }
 
 
@@ -142,26 +147,36 @@ public class AdminRoleWindow extends javax.swing.JFrame implements Node, Admin{
 
     private void viewEmployeesButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+        viewEmployeesW = new ViewEmployeesWindow(this.admin);
+        viewEmployeesW.setParentNode(this);
+
         this.setVisible(false);
         viewEmployeesW.setVisible(true);
     }
 
     private void addEmployeeButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+
+        addEmployeeW = new AddEmployeeWindow(this.admin);
+        addEmployeeW.setParentNode(this);
+
         this.setVisible(false);
         addEmployeeW.setVisible(true);
     }
 
     private void removeEmployeeButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+
+        removeEmployeeW = new RemoveEmployeeWindow(this.admin);
+        removeEmployeeW.setParentNode(this);
+
         this.setVisible(false);
         removeEmployeeW.setVisible(true);
     }
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-//        closeWindow_();
-//        System.exit(0);
+
         admin.logout();
 //        // TODO add your handling code here:
         this.setVisible(false);
@@ -220,14 +235,4 @@ public class AdminRoleWindow extends javax.swing.JFrame implements Node, Admin{
     }
     // End of variables declaration
 
-
-    @Override
-    public void setAdmin(AdminRole admin) {
-            this.admin = admin;
-    }
-
-    @Override
-    public AdminRole getAdmin() {
-        return this.admin;
-    }
 }

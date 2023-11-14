@@ -11,16 +11,17 @@ import javax.swing.*;
  *
  * @author Menna Magdy
  */
-public class AddEmployeeWindow extends javax.swing.JFrame implements Node, Admin{
+public class AddEmployeeWindow extends javax.swing.JFrame implements Node{
 
     /**
      * Creates new form AddEmployeeWindow
      */
     private Node parent;
     private AdminRole admin;
-    public AddEmployeeWindow() {
+    public AddEmployeeWindow(AdminRole admin) {
         initComponents();
         this.setTitle("Add Employee");
+        this.admin = admin;
     }
 
     /**
@@ -177,16 +178,17 @@ public class AddEmployeeWindow extends javax.swing.JFrame implements Node, Admin
             String email = jTextField3.getText();
             String address = jTextField4.getText();
             String phone_number = jTextField5.getText();
-            if (id == null || name == null || email == null || address == null || phone_number == null
-            || id == "" || name == "" || email == "" || address == "" || phone_number == "") {
+//            if (id == null || name == null || email == null || address == null || phone_number == null
+//            || id == "" || name == "" || email == "" || address == "" || phone_number == "") {
+            if(id.isEmpty() || name.isEmpty() || address.isEmpty() || email.isEmpty() || phone_number.isEmpty()){
                 JOptionPane.showMessageDialog(null, "Some fields are empty.");
 
             } else {
-                if (getAdmin().employeeExists(id)) {
+                if (this.admin.employeeExists(id)) {
                     JOptionPane.showMessageDialog(null, "Employee "
                             + id + " already exists!");
                 } else {
-                    getAdmin().addEmployee(id, name, email, address, phone_number);
+                    this.admin.addEmployee(id, name, email, address, phone_number);
                     JOptionPane.showMessageDialog(null, "Employee "
                             + id + " added successfully.");
                     jTextField1.setText("");
@@ -203,6 +205,14 @@ public class AddEmployeeWindow extends javax.swing.JFrame implements Node, Admin
         catch (ArrayIndexOutOfBoundsException e2) {
             JOptionPane.showMessageDialog(null, "Some fields are empty.");
         }
+
+//        String[][] tableData = new String[admin.getListOfEmployees().length][5];
+//        for(int i=0 ; i<admin.getListOfEmployees().length ; i++) {
+//            tableData[i] = admin.getListOfEmployees()[i].toString().split(",");
+//            System.out.println(tableData[i][1]);
+//        }
+
+
     }
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -245,7 +255,7 @@ public class AddEmployeeWindow extends javax.swing.JFrame implements Node, Admin
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AddEmployeeWindow().setVisible(true);
+                new AddEmployeeWindow(new AdminRole()).setVisible(true);
             }
         });
     }
@@ -273,14 +283,5 @@ public class AddEmployeeWindow extends javax.swing.JFrame implements Node, Admin
         return this.parent;
     }
 
-    @Override
-    public void setAdmin(AdminRole admin) {
-        this.admin = admin;
-    }
 
-    @Override
-    public AdminRole getAdmin() {
-        return this.admin;
-    }
-    // End of variables declaration
 }

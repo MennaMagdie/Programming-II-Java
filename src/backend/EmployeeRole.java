@@ -19,6 +19,7 @@ public class EmployeeRole implements FileNames {
         customerProductDatabase = new CustomerProductDatabase(CUSTOMER_PRODUCT_FILENAME);
 //        productDatabase.readFromFile();
 //        customerProductDatabase.readFromFile();
+
     }
 
     public void addProduct(String productID, String productName, String manufacturerName, String supplierName, int quantity, float price) {

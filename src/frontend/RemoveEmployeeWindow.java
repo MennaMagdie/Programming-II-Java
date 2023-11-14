@@ -5,23 +5,36 @@
 package frontend;
 
 import backend.AdminRole;
-
 import javax.swing.*;
+import javax.swing.plaf.synth.SynthOptionPaneUI;
 
 /**
  *
  * @author Menna Magdy
  */
-public class RemoveEmployeeWindow extends javax.swing.JFrame implements Node, Admin{
+public class RemoveEmployeeWindow extends javax.swing.JFrame implements Node{
 
     /**
      * Creates new form RemoveEmployeeWindow
      */
     private Node parent;
     private AdminRole admin;
-    public RemoveEmployeeWindow() {
+    public RemoveEmployeeWindow(AdminRole admin) {
         initComponents();
         this.setTitle("Remove Employee");
+        this.admin = admin;
+        try {
+            String[][] tableData = null;
+            tableData = new String[admin.getListOfEmployees().length][5];
+
+            for (int i = 0; i < admin.getListOfEmployees().length; i++) {
+                tableData[i] = admin.getListOfEmployees()[i].lineRepresentation().split(",");
+            }
+
+        }
+        catch(NullPointerException e) {
+            System.out.println("No data available for Employees..");
+        }
     }
 
     /**
@@ -94,16 +107,32 @@ public class RemoveEmployeeWindow extends javax.swing.JFrame implements Node, Ad
 
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+
+            String[][] tableData = new String[admin.getListOfEmployees().length][5];
+            for (int i = 0; i < admin.getListOfEmployees().length; i++) {
+                tableData[i] = admin.getListOfEmployees()[i].lineRepresentation().split(",");
+            }
+            for (int i = 0; i < admin.getListOfEmployees().length; i++) {
+
+                for(int j=0 ; j<5 ; j++) {
+                    System.out.println(tableData[i][j] + " ");
+                }
+                System.out.println("\n");
+            }
+
+
         // TODO add your handling code here:
         String id = jTextField1.getText();
         jTextField1.setText("");
-        if(getAdmin().employeeExists(id)) {
-            getAdmin().removeEmployee(id);
+        if(admin.employeeExists(id)) {
+            admin.removeEmployee(id);
             JOptionPane.showMessageDialog(null, "Employee " + id + " removed successfully!");
         }
         else {
             JOptionPane.showMessageDialog(null, "Employee " + id + " doesn't exist..");
         }
+
+
 
     }
 
@@ -143,7 +172,7 @@ public class RemoveEmployeeWindow extends javax.swing.JFrame implements Node, Ad
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new RemoveEmployeeWindow().setVisible(true);
+                new RemoveEmployeeWindow(new AdminRole()).setVisible(true);
             }
         });
     }
@@ -163,14 +192,5 @@ public class RemoveEmployeeWindow extends javax.swing.JFrame implements Node, Ad
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField jTextField1;
 
-    @Override
-    public void setAdmin(AdminRole admin) {
-        this.admin = admin;
-    }
-
-    @Override
-    public AdminRole getAdmin() {
-        return this.admin;
-    }
     // End of variables declaration
 }

@@ -3,21 +3,43 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package frontend;
+
+import backend.AdminRole;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 
 /**
  *
  * @author Menna Magdy
  */
-public class ViewEmployeesWindow extends javax.swing.JFrame implements Node {
+public class ViewEmployeesWindow extends javax.swing.JFrame implements Node{
 
     /**
      * Creates new form ViewEmployeesWindow
      */
     private Node parent;
-    public ViewEmployeesWindow() {
+    private AdminRole admin;
+    private String[][] tableData = null;
+    public ViewEmployeesWindow(AdminRole admin) {
+        this.admin = admin;
         initComponents();
         this.setTitle("View Employees");
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        try {
+            tableData = new String[admin.getListOfEmployees().length][5];
+
+            for (int i = 0; i < admin.getListOfEmployees().length; i++) {
+                tableData[i] = admin.getListOfEmployees()[i].lineRepresentation().split(",");
+                model.addRow(tableData[i]);
+            }
+
+        }
+        catch(NullPointerException e) {
+            System.out.println("no admin fel view");
+        }
+
+
 
     }
 
@@ -40,13 +62,18 @@ public class ViewEmployeesWindow extends javax.swing.JFrame implements Node {
             }
         });
 
+//        jTable1.setModel(new DefaultTableModel(tableData, new String[]{"Employee ID", "Name", "E-mail", "Address", "Phone Number"}));
+
+
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
-                        {null, null, null, null, null},
-                        {null, null, null, null, null},
-                        {null, null, null, null, null},
-                        {null, null, null, null, null}
-                },
+//                new Object [][] {
+//                        {null, null, null, null, null},
+//                        {null, null, null, null, null},
+//                        {null, null, null, null, null},
+//                        {null, null, null, null, null}
+//                },
+                tableData
+                ,
                 new String [] {
                         "Employee ID", "Name", "E-mail", "Address", "Phone Number"
                 }
@@ -87,6 +114,11 @@ public class ViewEmployeesWindow extends javax.swing.JFrame implements Node {
     }// </editor-fold>
 
 
+//    public void setData(String[][] data) {
+//        jTable1.setModel(new DefaultTableModel(data, ));
+//
+//    }
+
     private void formWindowClosing(java.awt.event.WindowEvent evt) {
         // TODO add your handling code here:
         this.setVisible(false);
@@ -123,7 +155,8 @@ public class ViewEmployeesWindow extends javax.swing.JFrame implements Node {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ViewEmployeesWindow().setVisible(true);
+                new ViewEmployeesWindow(new AdminRole()).setVisible(true);
+
             }
         });
     }
@@ -140,5 +173,6 @@ public class ViewEmployeesWindow extends javax.swing.JFrame implements Node {
     // Variables declaration - do not modify
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+
     // End of variables declaration
 }
