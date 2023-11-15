@@ -9,15 +9,9 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
-/**
- *
- * @author Menna Magdy
- */
+
 public class ViewEmployeesWindow extends javax.swing.JFrame implements Node{
 
-    /**
-     * Creates new form ViewEmployeesWindow
-     */
     private Node parent;
     private AdminRole admin;
     private String[][] tableData = null;
@@ -25,7 +19,15 @@ public class ViewEmployeesWindow extends javax.swing.JFrame implements Node{
         this.admin = admin;
         initComponents();
         this.setTitle("View Employees");
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        DefaultTableModel model = new DefaultTableModel(tableData, new Object[]{"Employee ID", "Name", "E-mail", "Address", "Phone Number"}) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Make all cells not editable
+            }
+        };
+
+        jTable1.setModel(model);
+        model.setRowCount(0);
         try {
             tableData = new String[admin.getListOfEmployees().length][5];
 

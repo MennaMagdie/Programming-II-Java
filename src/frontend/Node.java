@@ -1,6 +1,11 @@
 package frontend;
 
+/**
+ *
+ * @author sama
+ */
 public interface Node {
-    public void setParentNode(Node node);
     public Node getParentNode();
+    public void setParentNode(Node node);
 }
+

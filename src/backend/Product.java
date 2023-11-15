@@ -66,11 +66,10 @@ public class Product implements Record {
         return price;
     }
 
-
     @Override
     public String lineRepresentation(){
-        return this.productID + "," + this.productName+","+this.manufacturerName+","
-                +this.supplierName+","+this.quantity+","+this.price;
+        return this.productID + "," + this.productName+ "," +this.manufacturerName+ ","
+                +this.supplierName+ "," +this.quantity+ "," +this.price;
     }
 
     @Override

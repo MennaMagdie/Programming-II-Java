@@ -8,10 +8,6 @@ import backend.AdminRole;
 import javax.swing.*;
 import javax.swing.plaf.synth.SynthOptionPaneUI;
 
-/**
- *
- * @author Menna Magdy
- */
 public class RemoveEmployeeWindow extends javax.swing.JFrame implements Node{
 
     /**

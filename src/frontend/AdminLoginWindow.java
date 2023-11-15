@@ -8,10 +8,6 @@ import constants.LoginCredentials;
 
 import javax.swing.*;
 
-/**
- *
- * @author Menna Magdy
- */
 public class AdminLoginWindow extends javax.swing.JFrame implements LoginCredentials, Node{
 
     /**

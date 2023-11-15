@@ -1,17 +1,23 @@
 package backend;
 
-import backend.Database;
-
 import java.util.*;
 import java.io.*;
 
-class ProductDatabase extends Database {
+public class ProductDatabase extends Database{
 
     private ArrayList<Product> records = new ArrayList<>();
-//    private String filename;
+    private String filename;
 
     public ProductDatabase (String filename){
         this.setFilename(filename);
+    }
+    @Override
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+    @Override
+    public String getFilename() {
+        return filename;
     }
     public void setRecords(ArrayList<Product> records) {
         this.records = records;
@@ -19,7 +25,22 @@ class ProductDatabase extends Database {
     public ArrayList<Product> getRecords() {
         return records;
     }
-
+//    @Override
+//    public void readFromFile(){
+//        try {
+//            File file = new File(filename);
+//            Scanner scan = new Scanner(file);
+//            while(scan.hasNextLine()) {
+//                String line = scan.nextLine();
+//                Product product = createRecordFrom(line);
+//                this.insertRecord(product);
+//            }
+//            scan.close();
+//
+//        } catch (FileNotFoundException ex) {
+//            ex.printStackTrace();
+//        }
+//    }
     @Override
     public Product createRecordFrom(String line){
         String[]  splitData = line.split(",");
@@ -38,6 +59,7 @@ class ProductDatabase extends Database {
         }
         return false;
     }
+    @Override
     public Product getRecord(String key){
         for (Product record:records){
             if(record.getProductID().equals(key))
@@ -45,27 +67,22 @@ class ProductDatabase extends Database {
         }
         return null;
     }
-
+    
     @Override
     public void insertRecord(Record record){
         this.records.add((Product)record);
-        setNumberOfRecords(getNumberOfRecords() +  1);
     }
     @Override
     public void deleteRecord(String key){
-        if(this.contains(key)) {
-
-
-            for (Product record : records) {
-                if (record.getProductID().equals(key))
-                    records.remove(record);
-            }
+        for (Product record:records){
+            if(record.getProductID().equals(key))
+                records.remove(record);
         }
     }
     @Override
     public void saveToFile(){
         try {
-            try (FileWriter writer = new FileWriter(getFilename(), false)) {
+            try (FileWriter writer = new FileWriter(filename, false)) {
                 for(Product record:records){
                     writer.write(record.getProductID()+","+record.getProductName()+","+record.getManufacturerName()+","+record.getSupplierName()+","+record.getQuantity()+","+record.getPrice()+"\n");
                 }

@@ -1,13 +1,10 @@
 package backend;
 
-import backend.CustomerProduct;
-import backend.Database;
-
 import java.util.*;
 import java.io.*;
 import java.time.LocalDate;
 
- class CustomerProductDatabase extends Database {
+public class CustomerProductDatabase extends Database {
 
     private ArrayList<CustomerProduct> records = new ArrayList<>();
 
@@ -50,7 +47,7 @@ import java.time.LocalDate;
     public void insertRecord(Record record){
 
         this.records.add((CustomerProduct)record);
-//        setNumberOfRecords(getNumberOfRecords() +  1);
+        setNumberOfRecords(getNumberOfRecords() +  1);
     }
     @Override
     public void deleteRecord(String key){ //ConcurrentModificationException
@@ -63,7 +60,7 @@ import java.time.LocalDate;
         catch(ConcurrentModificationException c) {
 //            System.out.println("trial?");
         }
-    }
+        }
 
     @Override
     public void saveToFile(){
@@ -71,6 +68,7 @@ import java.time.LocalDate;
             FileWriter writer = new FileWriter(getFilename(), false);
             for(CustomerProduct record:records) {
                 writer.write(record.getSearchKey());
+//                System.out.println("hii");
             }
             writer.close();
 

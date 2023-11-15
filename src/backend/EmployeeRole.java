@@ -1,15 +1,11 @@
 package backend;
 
-import backend.CustomerProduct;
-import backend.CustomerProductDatabase;
-import backend.Product;
-import backend.ProductDatabase;
 import constants.FileNames;
 
 import java.util.ArrayList;
 import java.time.LocalDate;
 
-public class EmployeeRole implements FileNames {
+public class EmployeeRole implements FileNames{
 
     private ProductDatabase productDatabase;
     private CustomerProductDatabase customerProductDatabase;
@@ -17,20 +13,19 @@ public class EmployeeRole implements FileNames {
     public EmployeeRole() {
         productDatabase = new ProductDatabase(PRODUCT_FILENAME);
         customerProductDatabase = new CustomerProductDatabase(CUSTOMER_PRODUCT_FILENAME);
-//        productDatabase.readFromFile();
-//        customerProductDatabase.readFromFile();
-
+        productDatabase.readFromFile();
+        customerProductDatabase.readFromFile();
     }
 
     public void addProduct(String productID, String productName, String manufacturerName, String supplierName, int quantity, float price) {
         Product product = new Product(productID, productName, manufacturerName, supplierName, quantity, price);
         productDatabase.insertRecord(productDatabase.createRecordFrom(product.lineRepresentation()));
-        logout();
+//        logout();
     }
 
     public Product[] getListOfProducts() {
         ArrayList<Product> product = productDatabase.returnAllRecords();
-        return product.toArray(Product[]::new);
+        return product.toArray(Product[]::new);  
     }
 
     public CustomerProduct[] getListOfPurchasingOperations() {
@@ -46,7 +41,7 @@ public class EmployeeRole implements FileNames {
             product.setQuantity(product.getQuantity() - 1);
             CustomerProduct customerProduct = new CustomerProduct(customerSSN, productID, purchaseDate);
             customerProductDatabase.insertRecord(customerProductDatabase.createRecordFrom(customerProduct.lineRepresentation()));
-            logout();
+//            logout();
             return true;
         }
     }
@@ -70,12 +65,16 @@ public class EmployeeRole implements FileNames {
 
         product.setQuantity(product.getQuantity() + 1);
         customerProductDatabase.deleteRecord(key);
-        logout();
+//        logout();
         return product.getPrice();
     }
 
     public void logout() {
         productDatabase.saveToFile();
         customerProductDatabase.saveToFile();
+    }
+    
+    public boolean productExist(String key){
+        return productDatabase.contains(key);
     }
 }

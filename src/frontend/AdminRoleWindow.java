@@ -10,10 +10,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 
-/**
- *
- * @author Menna Magdy
- */
 public class AdminRoleWindow extends javax.swing.JFrame implements Node{
 
     private ViewEmployeesWindow viewEmployeesW;

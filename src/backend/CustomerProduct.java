@@ -3,7 +3,7 @@ package backend;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class CustomerProduct implements Record {
+public class CustomerProduct implements Record{
 
     private String customerSSN, productID;
     private LocalDate purchaseDate;
@@ -43,8 +43,9 @@ public class CustomerProduct implements Record {
 
     @Override
     public String getSearchKey() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        String formattedDate = getPurchaseDate().format(formatter);
-        return getCustomerSSN() + "," + getProductID() + "," + formattedDate+ "\n";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//        formatter.format(getPurchaseDate());
+        String formatDate = getPurchaseDate().format(formatter);
+        return getCustomerSSN() + "," + getProductID() + "," + formatDate+ "\n";
     }
 }
